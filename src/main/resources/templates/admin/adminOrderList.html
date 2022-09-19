@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header"/>
+<body>
+<div class="container" style="max-width: 1140px">
+    <div th:replace="fragments/bodyHeader :: bodyHeader"/>
+    <h1>관리자 발주내역</h1>
+    <hr>
+    <div>
+        <table class="table table-striped" border="1">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>유저정보</th>
+                <th>상품명</th>
+                <th>주문날짜</th>
+                <th>주문상태</th>
+                <th>주문수량</th>
+                <th>총 가격</th>
+                <th>주소</th>
+                <th>상세주소</th>
+                <th>우편번호</th>
+                <th>결제 승인</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="orderList : ${orderLists}">
+                <td th:text="${orderList.getId()}"></td>
+                <td th:text="${orderList.getMember().userId}"></td>
+                <td th:text="${orderList.getOrderItem().getItemName()}"></td>
+                <td th:text="${#temporals.format(orderList.getOrderDate(), 'yyyy-MM-dd HH:mm:ss')}"></td>
+                <td th:text="${orderList.getStatus()}"></td>
+                <td th:text="${orderList.getOrderItem().getCount()}"></td>
+                <td th:text="${orderList.getOrderItem().getTotalPrice()}"></td>
+                <td th:text="${orderList.getAddress().city}"></td>
+                <td th:text="${orderList.getAddress().street}"></td>
+                <td th:text="${orderList.getAddress().zipcode}"></td>
+                <td>
+                    <a th:if="${orderList.status.name() == 'ORDER'}" href="#"
+                       th:href="'javascript:approve('+${orderList.getId()}+')'"
+                       class="btn btn-danger">승인</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div> <!-- /container -->
+</body>
+<script>
+    function approve(id) {
+        var form = document.createElement("form");
+        form.setAttribute("method", "post");
+        form.setAttribute("action", "/admin/orderList/" + id + "");
+        document.body.appendChild(form);
+        form.submit();
+    }</script>
+</html>

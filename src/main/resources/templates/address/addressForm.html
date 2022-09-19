@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header"/>
+<style>
+    .fieldError {
+        border-color: #bd2130;
+    }
+</style>
+<body>
+<h1>새로운 주소를 작성해주세요</h1>
+<hr>
+<div class="container">
+    <div th:replace="fragments/bodyHeader :: bodyHeader"/>
+    <form role="form" th:action="@{/address/new/{id} (id=${addressForm.id})}" th:object="${addressForm}"
+          th:method="post">
+        <input type="hidden" th:field="*{id}"/>
+        <div class="form-group">
+            <label th:for="city">도시</label>
+            <input type="text" th:field="*{city}" placeholder="도시를 입력하세요" autofocus
+                   th:class="${#fields.hasErrors('city')}? 'form-control fieldError' : 'form-control'">
+        </div>
+        <div class="form-group">
+            <label th:for="street">상세주소</label>
+            <input type="text" th:field="*{street}" placeholder="상세주소를 입력하세요"
+                   th:class="${#fields.hasErrors('street')}? 'form-control fieldError' : 'form-control'">
+        </div>
+        <div class="form-group">
+            <label th:for="zipcode">우편번호</label>
+            <input type="text" th:field="*{zipcode}" placeholder="우편번호를 입력하세요"
+                   th:class="${#fields.hasErrors('zipcode')}? 'form-control fieldError' : 'form-control'">
+        </div>
+        <button type="submit" class="btn btn-primary">주소 추가하기</button>
+    </form>
+</div> <!-- /container -->
+</body>
+</html>

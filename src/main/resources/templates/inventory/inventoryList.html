@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header"/>
+<body>
+<div class="container" style="max-width: 1140px">
+    <div th:replace="fragments/bodyHeader :: bodyHeader"/>
+    <div>
+        <table class="table table-striped" border="1">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>상품명</th>
+                <th>입고날짜</th>
+                <th>출고날짜</th>
+                <th>가격</th>
+                <th>재고수량</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item : ${items}">
+                <td th:text="${item.id}"></td>
+                <td th:text="${item.name}"></td>
+                <td th:text="${#temporals.format(item.createDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                <td th:text="${#temporals.format(item.updateDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                <td th:text="${item.price}"></td>
+                <td th:text="${item.count}"></td>
+                <td>
+                    <form th:action="@{/items/{id}/minus (id=${item.id})}" th:method="get">
+                        <button class="btn btn-primary">출고</button>
+                    </form>
+                </td>
+                <td>
+                    <form th:action="@{/items/{id}/remove (id=${item.id})}" th:method="post">
+                        <button class="btn btn-primary">삭제</button>
+                    </form>
+                </td>
+                <td>
+                    <form th:action="@{/items/{id}/edit (id=${item.id})}" th:method="get">
+                        <button class="btn btn-primary">수정</button>
+                    </form>
+                </td>
+                <td>
+                    <form th:action="@{/order/{id} (id=${item.id})}" th:method="get">
+                        <button class="btn btn-primary">발주</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <a href="/item/new">재고 생성하기</a>
+</div> <!-- /container -->
+</body>
+</html>
