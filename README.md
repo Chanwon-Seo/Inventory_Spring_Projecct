@@ -1,7 +1,5 @@
 # Inventory_Spring_Projecct
 
----
-
 ## 2022-03-23 V1
 - Login, SignUp
  
